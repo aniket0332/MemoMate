@@ -14,7 +14,7 @@ const LandingPage = () => {
     return (
         <Container>
             <Grid sx={{padding: "5rem"}}>
-            <Card raised='true' sx={{ maxWidth: 345, textAlign: "center", marginLeft: "auto",
+            <Card raised={true} sx={{ maxWidth: 345, textAlign: "center", marginLeft: "auto",
             marginRight: "auto" }}>
                     <CardMedia
                         component="img"

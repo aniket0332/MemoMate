@@ -6,7 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -51,6 +52,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Header = () => {
+
+  const navigate=useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
     <AppBar position="static">
@@ -71,6 +74,10 @@ const Header = () => {
         >
           <Link to='/myNotes' >MyNotes</Link>
         </Typography>
+          <Button variant="success" onClick={()=>{
+            localStorage.removeItem("userInfo");
+            navigate('/');
+          }}>Logout</Button>
         <Search>
           <SearchIconWrapper>
             <SearchIcon />

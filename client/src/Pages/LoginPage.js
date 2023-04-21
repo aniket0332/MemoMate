@@ -21,7 +21,7 @@ const LoginPage = ({ history }) => {
   // const { loading, error, userInfo } = userLogin;
 
   // useEffect(() => {
-  //   const userInfo = localStorage.getItem("user");
+  //   const userInfo = localStorage.getItem("userInfo");
   //   if (userInfo) {
   //     history.push("/mynotes");
   //   }
