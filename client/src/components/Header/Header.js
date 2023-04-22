@@ -8,6 +8,9 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { logout } from '../../actions/userActions';
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,8 +55,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const navigate=useNavigate();
+  
+  const logoutHandler = () => {
+    dispatch(logout());
+    navigate('/');
+  };
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
     <AppBar position="static">
@@ -64,7 +77,7 @@ const Header = () => {
           component="div"
           sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
         >
-          <Link to='/' >MemoMate</Link>
+          <Link>MemoMate</Link>
         </Typography>
         <Typography
           variant="h6"
@@ -74,10 +87,7 @@ const Header = () => {
         >
           <Link to='/myNotes' >MyNotes</Link>
         </Typography>
-          <Button variant="success" onClick={()=>{
-            localStorage.removeItem("userInfo");
-            navigate('/');
-          }}>Logout</Button>
+          <Button variant="success" onClick={logoutHandler}>Logout</Button>
         <Search>
           <SearchIconWrapper>
             <SearchIcon />

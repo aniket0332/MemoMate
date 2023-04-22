@@ -1,59 +1,35 @@
-import React, { useEffect, useState, useDispatch, useSelector } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Card, Button, Grid, Link } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Loading from "../components/Loading";
 import ErrorMessage from "../components/ErrorMessage";
-import axios from 'axios';
-// import { login } from "../actions/userActions";
-
+import { login } from "../actions/userActions";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = ({ history }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const userLogin = useSelector((state) => state.userLogin);
-  // const { loading, error, userInfo } = userLogin;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
 
-  // useEffect(() => {
-  //   const userInfo = localStorage.getItem("userInfo");
-  //   if (userInfo) {
-  //     history.push("/mynotes");
-  //   }
-  // }, [history]);
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/mynotes");
+    }
+  }, [history, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    // dispatch(login(email, password));
+    dispatch(login(email, password));
     // console.log(email, password);
 
-    try {
-      const config = {
-        headers: {
-          "Content-type":"application/json"
-        }
-      }
-      
-      setLoading(true)
-      
-      const { data } = await axios.post('/api/users/login',{
-        email,
-        password,
-      },config
-      ); 
-      console.log(data);
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      setLoading(false);
-
-    } catch (error) {
-      setError(error.response.data.message);
-      setLoading(false);
-    }
   };
 
   return (

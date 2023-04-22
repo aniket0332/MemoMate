@@ -1,52 +1,39 @@
-import React, { useEffect, useState, useDispatch, useSelector } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Card, Button, Grid, Link } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Loading from "../components/Loading";
 import ErrorMessage from "../components/ErrorMessage";
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../actions/userActions';
+import { useNavigate } from 'react-router-dom';
 
-const RegisterPage = () => {
+const RegisterPage = ({ history }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(""); 
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const submitHandler = async(e) => {
+ 
+  const dispatch = useDispatch();
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [history, userInfo]);
+
+  const submitHandler = (e) => {
     e.preventDefault();
 
     if (password !== confirmpassword) {
       setMessage("Passwords do not match");
-    } else {
-      setMessage(null);
-
-      try {
-        const config = {
-          headers: {
-            "Content-type":"application/json"
-          },
-        };
-        
-        setLoading(true)
-        
-        const { data } = await axios.post('/api/users',{
-          name,
-          email,
-          password
-        },config
-        ); 
-        console.log(data);
-        localStorage.setItem('userInfo', JSON.stringify(data));
-        setLoading(false);
-  
-      } catch (error) {
-        setError(error.response.data.message);
-        setLoading(false);
-      }
-    }
+    } else dispatch(register(name, email, password));
   };
   return (
     <Container>
@@ -103,6 +90,9 @@ const RegisterPage = () => {
               </label>
             </div>
             <Button type="submit" value="Submit" variant="outlined">Register</Button>
+            <div>
+            Have an Account ? <Link to="/login">Login</Link>
+          </div>
           </form>
         </CardContent>
       </Card>
