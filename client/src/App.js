@@ -7,6 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 import MyNotes from './Pages/MyNotes';
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
+import CreateNote from './Pages/CreateNote';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
            <Route path='/login' element={<LoginPage/>} />        
            <Route path='/register' element={<RegisterPage/>} />        
            <Route path='/myNotes' element={<MyNotes/>} />        
+           <Route path="/myNotes/createNote" element={<CreateNote/>} />;
            {/* <Route path="/createnote" element={<CreateNote/>} />; */}
 
       </Routes>

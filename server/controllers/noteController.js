@@ -75,4 +75,4 @@ const getNotes = asyncHandler(async (req, res) => {
     }
   });
   
-  export { getNoteById, getNotes, CreateNote, DeleteNote, UpdateNote };
+  module.exports = { getNoteById, getNotes, CreateNote, DeleteNote, UpdateNote };
