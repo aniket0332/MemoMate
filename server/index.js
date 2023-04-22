@@ -4,6 +4,7 @@ const notes = require("./data/notes");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const userRoutes = require('./routes/userRoutes');
+const noteRoutes = require('./routes/noteRoutes');
 const { errorHandler, notFound } = require("./middlewares/errorMiddleware");
 
 connectDB();
@@ -19,7 +20,7 @@ dotenv.config();
 // });
 
  app.use("/api/users", userRoutes);    
- app.use("/api/users", notesRoutes);    
+ app.use("/api/users", noteRoutes);    
 
 app.use(notFound);
 app.use(errorHandler);
